@@ -25,9 +25,15 @@ except AttributeError:
 
 
 class EventHandler(PatternMatchingEventHandler):
-    def on_modified(self, event):
+    def update_init(self):
         with open(INIT_FILE, 'a'):
             os.utime(INIT_FILE, None)
+
+    def on_created(self, event):
+        self.update_init()
+
+    def on_modified(self, event):
+        self.update_init()
 
 observer = Observer()
 
